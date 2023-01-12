@@ -125,7 +125,7 @@ func DockerImagePull(imageName string) {
 
 // DockrImageTarchanges the docker image to tar file
 func DockerImageToTar(exportName, dockerImageName string) bool {
-	fmt.Println("Converting docker image to tar file ")
+	fmt.Printf("Converting docker image to tar file: %s\n", exportName)
 	f, err := os.Create(exportName)
 
 	if err != nil {
@@ -200,7 +200,7 @@ func RunDockerSynkScan(imageName string) string {
 	// now := time.Now()
 	// DockerImageLoad(imageName)
 	// DockerImagePull(imageName)
-	fmt.Println("Scanning the docker image ")
+	fmt.Printf("Scanning the docker image: %s\n", imageName)
 
 	dockerScanCmd := exec.Command("docker", "scan", "--json", imageName)
 	dockerScanCmdOut, err := dockerScanCmd.Output()

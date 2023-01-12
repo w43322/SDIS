@@ -25,7 +25,7 @@ func AddFileOnIPFS(filename string) string {
 	if err != nil {
 		fmt.Println(err)
 	}
-	// cid, err := sh.Add(strings.NewReader("Hello IPFS it`s been a long time")
+	// cid, err := sh.Add(strings.NewReader("Hello IPFS it`s been a long time"))
 	var r = f
 
 	cid, err := sh.Add(r)
@@ -38,7 +38,8 @@ func AddFileOnIPFS(filename string) string {
 
 	err = os.Remove(filename)
 	if err != nil {
-		fmt.Println("The file could not be removed")
+		fmt.Println("The file could not be removed. Error message:")
+		fmt.Println(err)
 	}
 
 	fmt.Printf("added %s\n", cid)
