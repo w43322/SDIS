@@ -2,25 +2,26 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"prototype1.0.0/SDISUtils"
 )
 
 func main() {
 	fmt.Println("Start Secure docker image upload")
 
-	// arg := os.Args[1]
-	//
-	// if string(arg) == "" {
-	// 	fmt.Println("INPUT THE ARGUMENTS")
-	// 	return
-	// }
-	// ibcid := SDISUtils.SecureDockerImageUpload(string(arg))
-	// if ibcid < 0 {
-	// 	return
-	// }
-	// result := SDISUtils.BytesToInt(SDISUtils.SecureDockerImageShare(ibcid))
-	// SDISUtils.SecureDockerImageDownload(result)
+	arg := os.Args[1]
+	if string(arg) == "" {
+		fmt.Println("INPUT THE ARGUMENTS")
+		return
+	}
+	ibcid := SDISUtils.SecureDockerImageUpload(string(arg))
+	if ibcid < 0 {
+		return
+	}
+	result := SDISUtils.BytesToInt(SDISUtils.SecureDockerImageShare(ibcid))
+	SDISUtils.SecureDockerImageDownload(result)
 
 	r := gin.Default()
 
