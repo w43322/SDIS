@@ -66,9 +66,10 @@ func SecureDockerImageUpload(dockerImageName string) int {
 	metadata := CryptoUtils.Hash(cvelist)
 
 	// 3. 도커 이미지를 파일로 변환 및 암호화 해준다.
-	now := start.Format("2006-01-02 15:04:05")
+	now := ""
 	DockerUtils.DockerImageToTar(dockerImageName+now+".tar", dockerImageName)
 	AESKey := CryptoUtils.CheckKey(fmt.Sprint(metadata))
+	fmt.Printf("AESKey: %d\n", AESKey)
 
 	CryptoUtils.AesEncryptFile(dockerImageName+now+".tar", "enImage", AESKey)
 	CryptoUtils.AesEncryptString(cvelist, dockerImageName+now+"_cvelist", AESKey)
