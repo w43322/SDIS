@@ -3,12 +3,19 @@
 * WSL2 + Ubuntu 20.04LTS
 * Golang
 * Docker Desktop
+* kubo (ipfs节点的go语言实现，已集成在仓库中)
+* node.js
+* truffle
+* 全局透明代理（go、docker和相关组件需要代理才能正常工作）
 
 # 测试环境
 
 * Windows 10 21H2 (x86-64)
 * go 1.19.5
 * docker 20.10.22
+* kubo 0.17.0
+* node.js 18.13.0
+* truffle 5.7.2
 
 # 目前问题
 
@@ -36,14 +43,71 @@ cd SDIS
 
 ## 准备工作
 
-在本地的Docker Desktop上准备好要共享的docker镜像（以图中的`ubuntu`镜像为例）：
+### 准备docker镜像
+
+启动本地的Docker Desktop上，并准备好要共享的docker镜像（以图中的`ubuntu`镜像为例）：
 ![](.\readme\images\docker_image_preperation.PNG)
 
-### 潜在的问题
+#### 潜在的问题
 
 在接下来的过程，要用到`docker scan`命令来扫描镜像中的CVE，这要调用docker的snyk组件，第一次运行的时候要按y确认，因此可以先使用`docker scan --json ubuntu`命令预先激活snyk组件
 
 此外，在命令行中调用`docker scan`命令时，默认没有登陆状态，只能调用十次。在上传了很多镜像而超过这个限制后，会出现错误提示。此时再手动使用`docker scan --json ubuntu`命令，会弹出浏览器登录窗口，登录后就可以继续执行了。
+
+### 安装并启用kubo daemon（ipfs节点）
+
+把`./kubo/`添加到系统环境变量
+
+在命令行中输入`ipfs init`，初始化ipfs节点，得到以下输出（keypair会不同）：
+
+```
+PS C:\Github\SDIS> ipfs init
+generating ED25519 keypair...done
+peer identity: 12D3KooWKfV5gaX8DP83Q3HZv7Unp6pUQD9PJLLoZZSnoZEYoC8y
+initializing IPFS node at C:\Users\raywa\.ipfs
+to get started, enter:
+
+        ipfs cat /ipfs/QmQPeNsJPyVWPFDVHb77w8G42Fvo15z4bG2X8D2GhfbSXc/readme
+```
+
+按照提示，输入`ipfs cat /ipfs/...`命令，然后看到如下输出则安装成功
+
+```
+PS C:\Github\SDIS> ipfs cat /ipfs/QmQPeNsJPyVWPFDVHb77w8G42Fvo15z4bG2X8D2GhfbSXc/readme
+Hello and Welcome to IPFS!
+
+██╗██████╗ ███████╗███████╗
+██║██╔══██╗██╔════╝██╔════╝
+██║██████╔╝█████╗  ███████╗
+██║██╔═══╝ ██╔══╝  ╚════██║
+██║██║     ██║     ███████║
+╚═╝╚═╝     ╚═╝     ╚══════╝
+
+If you're seeing this, you have successfully installed
+......
+```
+
+输入`ipfs daemon --init`命令，以默认配置启动ipfs daemon，成功启动后会输出类似如下的内容：
+
+```
+PS C:\Github\SDIS> ipfs daemon --init
+Initializing daemon...
+Kubo version: 0.17.0
+Repo version: 12
+System version: amd64/windows
+Golang version: go1.19.1
+......
+API server listening on /ip4/127.0.0.1/tcp/5001
+WebUI: http://127.0.0.1:5001/webui
+Gateway (readonly) server listening on /ip4/127.0.0.1/tcp/8080
+Daemon is ready
+```
+
+### 安装并启用truffle（ethereum本地测试睥睨柜台）
+
+输入`npm install -g truffle`命令安装truffle
+
+
 
 ## 分析、加密镜像并上传至区块链
 
