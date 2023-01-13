@@ -20,8 +20,12 @@ func main() {
 	if ibcid < 0 {
 		return
 	}
+	fmt.Println("Start Secure docker image share")
 	result := SDISUtils.BytesToInt(SDISUtils.SecureDockerImageShare(ibcid))
+	fmt.Println("Start Secure docker image download")
 	SDISUtils.SecureDockerImageDownload(result)
+
+	return
 
 	r := gin.Default()
 
