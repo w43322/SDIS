@@ -5,7 +5,7 @@
 * Docker Desktop
 * kubo (ipfs节点的go语言实现，已集成在仓库中)
 * ganache
-* 全局透明代理（go、docker和相关组件需要代理才能正常工作）
+* 全局透明代理（go、docker和相关组件需要代理才能正常工作，换源或许也能解决）
 
 # 测试环境
 
@@ -113,94 +113,20 @@ https://trufflesuite.com/ganache/
 
 点击`save workspace`，启动daemon
 
-## 分析、加密镜像并上传至区块链
+## 运行脚本
 
-运行脚本，上传docker镜像
+运行下面的指令，其中，最后一项是参数，是image的名称
 
 ```
 go run ".\main.go" "ubuntu"
 ```
 
-此时，`SDISUtils.SecureDockerImageUpload`会被调用，完成镜像的分析、封包、加密、上传
+如果网络通常（能正常与docker服务器通信），脚本会依次完成下列操作
 
-成功后返回结果：
-```
-go run ".\main.go" "ubuntu"
-Start Secure docker image upload
-Scanning the docker image: ubuntu
-Error in dockerScanCmdout
-2023/01/12 16:58:30 exit status 1
-Changing the docker cve list to json file
-Successfully resulted in json file.
-Title : Out-of-Bounds  Severity : low  CvssScore : 0  CVE : [CVE-2022-3715]
-Title : Improper Input Validation  Severity : low  CvssScore : 6.5  CVE : [CVE-2016-2781]
-Title : Allocation of Resources Without Limits or Throttling  Severity : low  CvssScore : 7.5  CVE : [CVE-2016-20013]
-Title : Allocation of Resources Without Limits or Throttling  Severity : low  CvssScore : 7.5  CVE : [CVE-2016-20013]
-Title : CVE-2022-3219  Severity : low  CvssScore : 0  CVE : [CVE-2022-3219]
-Title : CVE-2022-3219  Severity : low  CvssScore : 0  CVE : [CVE-2022-3219]
-Title : Integer Overflow or Wraparound  Severity : low  CvssScore : 7.5  CVE : [CVE-2018-5709]
-Title : Integer Overflow or Wraparound  Severity : medium  CvssScore : 8.8  CVE : [CVE-2022-42898]
-Title : Integer Overflow or Wraparound  Severity : low  CvssScore : 7.5  CVE : [CVE-2018-5709]
-Title : Integer Overflow or Wraparound  Severity : medium  CvssScore : 8.8  CVE : [CVE-2022-42898]
-Title : Integer Overflow or Wraparound  Severity : low  CvssScore : 7.5  CVE : [CVE-2018-5709]
-Title : Integer Overflow or Wraparound  Severity : medium  CvssScore : 8.8  CVE : [CVE-2022-42898]
-Title : Integer Overflow or Wraparound  Severity : low  CvssScore : 7.5  CVE : [CVE-2018-5709]
-Title : Integer Overflow or Wraparound  Severity : medium  CvssScore : 8.8  CVE : [CVE-2022-42898]
-Title : Integer Overflow or Wraparound  Severity : low  CvssScore : 7.5  CVE : [CVE-2018-5709]
-Title : Integer Overflow or Wraparound  Severity : medium  CvssScore : 8.8  CVE : [CVE-2022-42898]
-Title : Integer Overflow or Wraparound  Severity : low  CvssScore : 7.5  CVE : [CVE-2018-5709]
-Title : Integer Overflow or Wraparound  Severity : medium  CvssScore : 8.8  CVE : [CVE-2022-42898]
-Title : Integer Overflow or Wraparound  Severity : low  CvssScore : 7.5  CVE : [CVE-2018-5709]
-Title : Integer Overflow or Wraparound  Severity : medium  CvssScore : 8.8  CVE : [CVE-2022-42898]
-Title : Integer Overflow or Wraparound  Severity : low  CvssScore : 7.5  CVE : [CVE-2018-5709]
-Title : Integer Overflow or Wraparound  Severity : medium  CvssScore : 8.8  CVE : [CVE-2022-42898]
-Title : Integer Overflow or Wraparound  Severity : low  CvssScore : 7.5  CVE : [CVE-2018-5709]
-Title : Integer Overflow or Wraparound  Severity : medium  CvssScore : 8.8  CVE : [CVE-2022-42898]
-Title : Integer Overflow or Wraparound  Severity : low  CvssScore : 7.5  CVE : [CVE-2018-5709]
-Title : Integer Overflow or Wraparound  Severity : medium  CvssScore : 8.8  CVE : [CVE-2022-42898]
-Title : Integer Overflow or Wraparound  Severity : low  CvssScore : 7.5  CVE : [CVE-2018-5709]
-Title : Integer Overflow or Wraparound  Severity : medium  CvssScore : 8.8  CVE : [CVE-2022-42898]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Out-of-bounds Read  Severity : low  CvssScore : 7.1  CVE : [CVE-2022-29458]
-Title : Improper Locking  Severity : low  CvssScore : 7.5  CVE : [CVE-2022-3996]
-Title : Improper Locking  Severity : low  CvssScore : 7.5  CVE : [CVE-2022-3996]
-Title : Uncontrolled Recursion  Severity : low  CvssScore : 7.5  CVE : [CVE-2017-11164]
-Title : Uncontrolled Recursion  Severity : low  CvssScore : 7.5  CVE : [CVE-2017-11164]
-Title : Off-by-one Error  Severity : medium  CvssScore : 5.5  CVE : [CVE-2022-3821]
-Title : Off-by-one Error  Severity : medium  CvssScore : 5.5  CVE : [CVE-2022-3821]
-Title : Off-by-one Error  Severity : medium  CvssScore : 5.5  CVE : [CVE-2022-3821]
-Title : Off-by-one Error  Severity : medium  CvssScore : 5.5  CVE : [CVE-2022-3821]
-Title : Off-by-one Error  Severity : medium  CvssScore : 5.5  CVE : [CVE-2022-3821]
-Title : Off-by-one Error  Severity : medium  CvssScore : 5.5  CVE : [CVE-2022-3821]
-Title : Off-by-one Error  Severity : medium  CvssScore : 5.5  CVE : [CVE-2022-3821]
-Title : Off-by-one Error  Severity : medium  CvssScore : 5.5  CVE : [CVE-2022-3821]
-Title : Off-by-one Error  Severity : medium  CvssScore : 5.5  CVE : [CVE-2022-3821]
-372.60000000000014
-Converting docker image to tar file: ubuntu.tar
-2023/01/12 16:58:30 API error (404): 404 page not found
+1. 分析、加密镜像并上传至区块链
 
-AESKey: [51 55 49 56 56 49 51 54 49 55 50 50 49 50 50 57 50 51 50 56 49 50 49 51 57 56 51 55 56 51 50 50]
-Adding enimage on IPFS
-added QmRDVgeRxegkm4GpKx6ZJWZYLihA8xdc1kN3k9LhEPHbB8
-Adding ubuntu_cvelist on IPFS
-added QmeRnQ292XU1J6me6FT2Wg9DSW1FAuWWrHFzgyfF29M2eG
-Register data to blockchain
-tx sent: 0x255054a5759c52d80284d001edfe3af7e2f89b41dc9723d9e5c5bcc51fb2e2d4
-Register data to blockchain done
-Docker image upload time Total cost : 51.4653186s
-```
+2. 在区块链上分享镜像
 
-## 在区块链上分享镜像
+3. 从区块链上下载镜像
 
-## 从区块链上下载镜像
+前端尚未完成，但后端功能是完整的
